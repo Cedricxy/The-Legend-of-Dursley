@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Grid
+  - Tilemap
+  - CinemachineCamera
+  - GlobalLight2D
   layers:
   - Default
   - TransparentFX
@@ -41,8 +45,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 1916535493
+    locked: 0
   - name: Objects
     uniqueID: 2228277053
+    locked: 0
+  - name: TreesBack
+    uniqueID: 3072582567
     locked: 0
   m_RenderingLayers:
   - Default
