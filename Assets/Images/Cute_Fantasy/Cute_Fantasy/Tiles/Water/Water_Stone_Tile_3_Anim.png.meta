@@ -285,7 +285,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Water_Stone_Tile_3_Anim_0: 6993417730389578793
+      Water_Stone_Tile_3_Anim_1: -1203113325335605110
+      Water_Stone_Tile_3_Anim_2: -5057757806636071359
+      Water_Stone_Tile_3_Anim_3: 4036057823436610367
+      Water_Stone_Tile_3_Anim_4: -9196044554604904567
+      Water_Stone_Tile_3_Anim_5: 3116827596552111956
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

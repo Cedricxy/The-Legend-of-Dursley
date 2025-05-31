@@ -8,6 +8,7 @@ TagManager:
   - Tilemap
   - CinemachineCamera
   - GlobalLight2D
+  - UI
   layers:
   - Default
   - TransparentFX
