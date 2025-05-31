@@ -29,9 +29,12 @@ namespace Player
 
         private void Update()
         {
-            HandleAnimation();
-            if (_walkAnimationLock > 0f)
-                _walkAnimationLock -= Time.deltaTime;
+            if (Time.timeScale != 0f)
+            {
+                HandleAnimation();
+                if (_walkAnimationLock > 0f)
+                    _walkAnimationLock -= Time.deltaTime;
+            }    
         }
 
         private void HandleAnimation()

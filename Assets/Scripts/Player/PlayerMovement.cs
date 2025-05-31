@@ -29,12 +29,14 @@ namespace Player
 
         private void Update()
         {
-            HandleInput();
+            if (Time.timeScale != 0f)
+                HandleInput();
         }
 
         private void FixedUpdate()
         {
-            MovePlayer();
+            if (Time.timeScale != 0f)
+                MovePlayer();
         }
 
         private void HandleInput()

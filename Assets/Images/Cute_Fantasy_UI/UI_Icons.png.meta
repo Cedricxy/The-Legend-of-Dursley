@@ -211,7 +211,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -225,7 +225,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -249,7 +249,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -304,9 +304,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 111
+        y: 112
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,9 +326,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 111
+        y: 112
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -348,9 +348,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 111
+        y: 112
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -369,10 +369,10 @@ TextureImporter:
       name: UI_Icons_3
       rect:
         serializedVersion: 2
-        x: 51
-        y: 113
-        width: 11
-        height: 14
+        x: 48
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -391,10 +391,10 @@ TextureImporter:
       name: UI_Icons_4
       rect:
         serializedVersion: 2
-        x: 67
-        y: 113
-        width: 11
-        height: 14
+        x: 64
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -413,10 +413,10 @@ TextureImporter:
       name: UI_Icons_5
       rect:
         serializedVersion: 2
-        x: 83
-        y: 113
-        width: 11
-        height: 14
+        x: 80
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -436,9 +436,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 111
+        y: 112
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -457,10 +457,10 @@ TextureImporter:
       name: UI_Icons_7
       rect:
         serializedVersion: 2
-        x: 113
-        y: 111
-        width: 14
-        height: 17
+        x: 112
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -479,10 +479,10 @@ TextureImporter:
       name: UI_Icons_8
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 96
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -501,10 +501,10 @@ TextureImporter:
       name: UI_Icons_9
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 96
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -523,10 +523,10 @@ TextureImporter:
       name: UI_Icons_10
       rect:
         serializedVersion: 2
-        x: 34
+        x: 32
         y: 96
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -545,10 +545,10 @@ TextureImporter:
       name: UI_Icons_11
       rect:
         serializedVersion: 2
-        x: 50
+        x: 48
         y: 96
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -568,9 +568,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 95
+        y: 96
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -589,10 +589,10 @@ TextureImporter:
       name: UI_Icons_13
       rect:
         serializedVersion: 2
-        x: 64
-        y: 79
+        x: 80
+        y: 96
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -611,10 +611,10 @@ TextureImporter:
       name: UI_Icons_14
       rect:
         serializedVersion: 2
-        x: 80
-        y: 95
-        width: 17
-        height: 17
+        x: 96
+        y: 96
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -633,10 +633,10 @@ TextureImporter:
       name: UI_Icons_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 95
+        x: 112
+        y: 96
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -655,10 +655,10 @@ TextureImporter:
       name: UI_Icons_16
       rect:
         serializedVersion: 2
-        x: 112
-        y: 95
+        x: 0
+        y: 80
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -677,10 +677,10 @@ TextureImporter:
       name: UI_Icons_17
       rect:
         serializedVersion: 2
-        x: 113
-        y: 79
-        width: 14
-        height: 17
+        x: 16
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -699,10 +699,10 @@ TextureImporter:
       name: UI_Icons_18
       rect:
         serializedVersion: 2
-        x: 2
+        x: 32
         y: 80
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -721,10 +721,10 @@ TextureImporter:
       name: UI_Icons_19
       rect:
         serializedVersion: 2
-        x: 18
+        x: 48
         y: 80
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -743,10 +743,10 @@ TextureImporter:
       name: UI_Icons_20
       rect:
         serializedVersion: 2
-        x: 34
+        x: 64
         y: 80
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -765,10 +765,10 @@ TextureImporter:
       name: UI_Icons_21
       rect:
         serializedVersion: 2
-        x: 50
+        x: 80
         y: 80
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -787,10 +787,10 @@ TextureImporter:
       name: UI_Icons_22
       rect:
         serializedVersion: 2
-        x: 64
-        y: 63
-        width: 17
-        height: 17
+        x: 96
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -809,8 +809,8 @@ TextureImporter:
       name: UI_Icons_23
       rect:
         serializedVersion: 2
-        x: 80
-        y: 79
+        x: 112
+        y: 80
         width: 16
         height: 16
       alignment: 0
@@ -831,10 +831,10 @@ TextureImporter:
       name: UI_Icons_24
       rect:
         serializedVersion: 2
-        x: 96
-        y: 79
+        x: 0
+        y: 64
         width: 16
-        height: 15
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -853,10 +853,10 @@ TextureImporter:
       name: UI_Icons_25
       rect:
         serializedVersion: 2
-        x: 2
+        x: 16
         y: 64
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -875,10 +875,10 @@ TextureImporter:
       name: UI_Icons_26
       rect:
         serializedVersion: 2
-        x: 18
+        x: 32
         y: 64
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -897,10 +897,10 @@ TextureImporter:
       name: UI_Icons_27
       rect:
         serializedVersion: 2
-        x: 34
+        x: 48
         y: 64
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -919,10 +919,10 @@ TextureImporter:
       name: UI_Icons_28
       rect:
         serializedVersion: 2
-        x: 50
+        x: 64
         y: 64
-        width: 12
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -941,8 +941,8 @@ TextureImporter:
       name: UI_Icons_29
       rect:
         serializedVersion: 2
-        x: 64
-        y: 48
+        x: 80
+        y: 64
         width: 16
         height: 16
       alignment: 0
@@ -963,9 +963,9 @@ TextureImporter:
       name: UI_Icons_30
       rect:
         serializedVersion: 2
-        x: 80
-        y: 63
-        width: 17
+        x: 96
+        y: 64
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -985,10 +985,10 @@ TextureImporter:
       name: UI_Icons_31
       rect:
         serializedVersion: 2
-        x: 96
-        y: 63
-        width: 17
-        height: 15
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1007,10 +1007,10 @@ TextureImporter:
       name: UI_Icons_32
       rect:
         serializedVersion: 2
-        x: 2
+        x: 16
         y: 48
-        width: 12
-        height: 13
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1029,10 +1029,10 @@ TextureImporter:
       name: UI_Icons_33
       rect:
         serializedVersion: 2
-        x: 18
-        y: 50
-        width: 12
-        height: 12
+        x: 32
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1051,10 +1051,10 @@ TextureImporter:
       name: UI_Icons_34
       rect:
         serializedVersion: 2
-        x: 35
+        x: 48
         y: 48
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1073,10 +1073,10 @@ TextureImporter:
       name: UI_Icons_35
       rect:
         serializedVersion: 2
-        x: 52
+        x: 64
         y: 48
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1095,10 +1095,10 @@ TextureImporter:
       name: UI_Icons_36
       rect:
         serializedVersion: 2
-        x: 81
-        y: 49
-        width: 14
-        height: 14
+        x: 80
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1118,9 +1118,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 50
+        y: 48
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1139,10 +1139,10 @@ TextureImporter:
       name: UI_Icons_38
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 32
-        width: 12
-        height: 13
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1161,10 +1161,10 @@ TextureImporter:
       name: UI_Icons_39
       rect:
         serializedVersion: 2
-        x: 18
-        y: 34
-        width: 12
-        height: 12
+        x: 16
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1183,10 +1183,10 @@ TextureImporter:
       name: UI_Icons_40
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 32
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1205,10 +1205,10 @@ TextureImporter:
       name: UI_Icons_41
       rect:
         serializedVersion: 2
-        x: 52
+        x: 48
         y: 32
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1249,10 +1249,10 @@ TextureImporter:
       name: UI_Icons_43
       rect:
         serializedVersion: 2
-        x: 81
-        y: 33
-        width: 14
-        height: 14
+        x: 80
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1272,9 +1272,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 34
+        y: 32
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1293,10 +1293,10 @@ TextureImporter:
       name: UI_Icons_45
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 16
-        width: 12
-        height: 13
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1315,10 +1315,10 @@ TextureImporter:
       name: UI_Icons_46
       rect:
         serializedVersion: 2
-        x: 18
-        y: 18
-        width: 12
-        height: 12
+        x: 16
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1337,10 +1337,10 @@ TextureImporter:
       name: UI_Icons_47
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 16
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1359,10 +1359,10 @@ TextureImporter:
       name: UI_Icons_48
       rect:
         serializedVersion: 2
-        x: 52
+        x: 48
         y: 16
-        width: 9
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1403,10 +1403,10 @@ TextureImporter:
       name: UI_Icons_50
       rect:
         serializedVersion: 2
-        x: 81
-        y: 17
-        width: 14
-        height: 14
+        x: 80
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1426,9 +1426,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 18
+        y: 16
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1469,10 +1469,10 @@ TextureImporter:
       name: UI_Icons_53
       rect:
         serializedVersion: 2
-        x: 17
-        y: 1
-        width: 14
-        height: 14
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1513,10 +1513,10 @@ TextureImporter:
       name: UI_Icons_55
       rect:
         serializedVersion: 2
-        x: 49
-        y: 1
-        width: 14
-        height: 14
+        x: 48
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1557,10 +1557,10 @@ TextureImporter:
       name: UI_Icons_57
       rect:
         serializedVersion: 2
-        x: 81
-        y: 1
-        width: 14
-        height: 14
+        x: 80
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1582,7 +1582,7 @@ TextureImporter:
         x: 96
         y: 0
         width: 16
-        height: 15
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1601,7 +1601,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 455a7622028f3e6488fd3ab259059fdb
     internalID: 0
     vertices: []
     indices: 
