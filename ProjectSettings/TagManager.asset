@@ -10,6 +10,7 @@ TagManager:
   - GlobalLight2D
   - UI
   - Collectables
+  - Manager
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - UI
   - Tilemap
   - Collectables
-  - 
+  - Manager
   - 
   - 
   - 

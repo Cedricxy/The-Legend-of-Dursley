@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ResourceSystem.Storage;
 
 namespace GameManagement
 {
@@ -7,7 +8,13 @@ namespace GameManagement
     {
         public void OnPlayGame()
         {
-            //Vorherige, letze Szene laden!      
+            string lastScene = "Tutorial";
+            if (ResourceStorageManager.Instance != null && 
+                !string.IsNullOrEmpty(ResourceStorageManager.Instance.LastScene))
+            {
+                lastScene = ResourceStorageManager.Instance.LastScene;
+            }
+            SceneManager.LoadScene(lastScene);      
         }
         
         public void OnQuitGame()
@@ -18,12 +25,11 @@ namespace GameManagement
         public void OnNewGame()
         {
             SceneManager.LoadScene("Tutorial");
-            //Vorherige Saves löschen!
         }
 
         public void OnLoadGame()
         {
-            OnPlayGame();
+            SaveAndLoad.LoadGame.IsGameLoaded = true;
         }
     }
 }
