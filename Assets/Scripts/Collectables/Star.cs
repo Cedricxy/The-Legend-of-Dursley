@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using ResourceSystem.Manager;
+using ResourceSystem.Manager; // Für ResourceManager
+using GameManagement; // Für ObjectCounter
 
 namespace Collectables
 {
@@ -9,15 +10,24 @@ namespace Collectables
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Star.cs: OnTriggerEnter2D mit Player ausgelöst.");
+                Debug.Log("[Star.cs] OnTriggerEnter2D mit Player ausgelöst.");
                 if (ResourceManager.Instance != null)
                 {
-                    Debug.Log($"Star.cs: ResourceManager.Instance ID: {ResourceManager.Instance.GetInstanceID()}. Rufe AddStar() auf.");
-                    ResourceManager.Instance.AddStar();
+                    ResourceManager.Instance.AddStar(); // Methode im ResourceManager zum Hinzufügen von Sternen
                 }
                 else
                 {
-                    Debug.LogError("Star.cs: ResourceManager.Instance ist null!");
+                    Debug.LogError("[Star.cs] ResourceManager.Instance ist null!");
+                }
+
+                // ObjectCounter informieren
+                if (ObjectCounter.Instance != null)
+                {
+                    ObjectCounter.Instance.ReportObjectCleared();
+                }
+                else
+                {
+                    Debug.LogWarning("[Star.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
                 }
 
                 Destroy(gameObject);

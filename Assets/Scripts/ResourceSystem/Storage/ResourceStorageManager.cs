@@ -113,6 +113,7 @@ using Gui;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SaveAndLoad; 
+using GameManagement;
 
 namespace ResourceSystem.Storage
 {
@@ -198,6 +199,37 @@ namespace ResourceSystem.Storage
             }
 
             Debug.Log($"<color=green>[RSM]</color> OnSceneLoadedActions für Szene '{scene.name}'. RSM-Werte VOR Aktionen: isInitial={isInitialGameStart}, Hearts={heartStorageValue}, RSM.lastScene='{this.lastScene}'");
+
+            // NEU: Behandle ForceNewGameReset zuerst, wenn die Tutorial-Szene geladen wird
+            if (GameController.ForceNewGameReset && scene.name == "Tutorial")
+            {
+                Debug.LogWarning($"<color=green>[RSM]</color> OnSceneLoadedActions: ForceNewGameReset ist true und Tutorial-Szene ('{scene.name}') wird geladen. Führe vollständigen Reset durch.");
+                
+                this.isInitialGameStart = false; // Der "initiale Start" ist hiermit abgeschlossen.
+                this.heartStorageValue = 1;
+                this.starStorageValue = 0;
+                this.lastScene = "Tutorial"; // Ziel ist es, im Tutorial zu bleiben/starten.
+
+                SaveGame.SaveDataObject newGameSaveData = new SaveGame.SaveDataObject
+                {
+                    IsInitialGameStart = this.isInitialGameStart,
+                    HeartValue = this.heartStorageValue,
+                    StarValue = this.starStorageValue,
+                    LastScene = this.lastScene
+                };
+                SaveGame.SaveGameData(newGameSaveData);
+                Debug.Log("<color=green>[RSM]</color> OnSceneLoadedActions: Expliziter Speicheraufruf nach ForceNewGameReset.");
+
+                GameController.ForceNewGameReset = false; // Flag zurücksetzen
+                Debug.Log("<color=green>[RSM]</color> OnSceneLoadedActions: GameController.ForceNewGameReset auf false zurückgesetzt.");
+
+                // Da wir den Zustand gerade explizit für das Tutorial gesetzt und gespeichert haben,
+                // können wir die restliche Logik von OnSceneLoadedActions für diesen Durchlauf überspringen,
+                // um Konflikte zu vermeiden.
+                Debug.Log($"<color=green>[RSM]</color> OnSceneLoadedActions für Szene '{scene.name}' nach ForceNewGameReset abgeschlossen.");
+                return; 
+            }
+
 
             if (LoadGame.Instance != null)
             {

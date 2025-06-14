@@ -51,6 +51,14 @@ namespace Enemies
         {
             Debug.Log("Slime besiegt!");
             // Hier könntest du noch eine Todesanimation, Soundeffekte oder Loot-Drops hinzufügen
+            if (GameManagement.ObjectCounter.Instance != null)
+            {
+                GameManagement.ObjectCounter.Instance.ReportObjectCleared();
+            }
+            else
+            {
+                Debug.LogWarning("[Slime.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
+            }
             Destroy(gameObject);
         }
     }

@@ -41,12 +41,13 @@ namespace SaveAndLoad
             }
         }
 
+        // Neue SaveDataObject-Struktur passend zu SaveGame und ResourceStorageManager
         private class SaveDataObject
         {
             public bool IsInitialGameStart = true;
-            public int MaxStorageValue = 1000000;
-            public int GoldStorageValue = 250000;
-            public int ElixirStorageValue = 250000;
+            public int HeartValue = 1;
+            public int StarValue = 0;
+            public string LastScene = "MainMenu";
         }
 
         public void LoadGameData()
@@ -56,25 +57,30 @@ namespace SaveAndLoad
             if (File.Exists(filePath))
             {
                 string jsonLoad = File.ReadAllText(filePath);
-                loadedData = JsonUtility.FromJson<SaveDataObject>(jsonLoad);
+                loadedData = JsonUtility.FromJson<SaveGame.SaveDataObject>(jsonLoad);
                 Debug.Log("<color=orange>[LoadGame]</color> Spieldaten erfolgreich geladen.");
-                Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
+                if (loadedData == null) // Zusätzliche Prüfung, falls FromJson fehlschlägt und null zurückgibt
+                {
+                    Debug.LogError("<color=orange>[LoadGame]</color> JsonUtility.FromJson hat null zurückgegeben. Erstelle Standarddaten.");
+                    loadedData = new SaveGame.SaveDataObject(); // Fallback
+                }
+                else
+                {
+                    Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
+                }
             }
             else
             {
-                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveDataObject mit Standardwerten.");
-                loadedData = new SaveDataObject(); // Erstellt ein Objekt mit Standardwerten (IsInitialGameStart=true, HeartValue=1, LastScene="MainMenu")
+                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveGame.SaveDataObject mit Standardwerten.");
+                loadedData = new SaveGame.SaveDataObject(); // NEU: Erstelle eine Instanz von SaveGame.SaveDataObject
                 Debug.Log($"<color=orange>[LoadGame]</color> Standardwerte verwendet: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
         }
 
-        public bool IsInitialGameStart => loadedData.IsInitialGameStart;
-
-        public int MaxStorageValue => loadedData.MaxStorageValue;
-
-        public int GoldStorageValue => loadedData.GoldStorageValue;
-
-        public int ElixirStorageValue => loadedData.ElixirStorageValue;
+        public bool IsInitialGameStart => loadedData != null ? loadedData.IsInitialGameStart : true; // Null-Check hinzugefügt
+        public int HeartStorageValue => loadedData != null ? loadedData.HeartValue : 1; // Null-Check hinzugefügt
+        public int StarStorageValue => loadedData != null ? loadedData.StarValue : 0; // Null-Check hinzugefügt
+        public string LastScene => loadedData != null ? loadedData.LastScene : "Tutorial"; // Null-Check und sinnvoller Fallback
 
         private void UpdateGameData()
         {
@@ -93,7 +99,8 @@ namespace SaveAndLoad
     public class LoadGame : MonoBehaviour
     {
         public static LoadGame Instance { get; private set; }
-        private SaveDataObject loadedData;
+        // private SaveDataObject loadedData; // Entferne alte private Klassendefinition
+        private SaveGame.SaveDataObject loadedData; // NEU: Verwende die öffentliche Klasse von SaveGame
 
         public static bool IsGameLoaded { get; set; }
 
@@ -127,15 +134,6 @@ namespace SaveAndLoad
             }
         }
 
-        // Neue SaveDataObject-Struktur passend zu SaveGame und ResourceStorageManager
-        private class SaveDataObject
-        {
-            public bool IsInitialGameStart = true;
-            public int HeartValue = 1;
-            public int StarValue = 0;
-            public string LastScene = "MainMenu";
-        }
-
         public void LoadGameData()
         {
             string filePath = Application.persistentDataPath + "/SaveGameData.json";
@@ -143,22 +141,32 @@ namespace SaveAndLoad
             if (File.Exists(filePath))
             {
                 string jsonLoad = File.ReadAllText(filePath);
-                loadedData = JsonUtility.FromJson<SaveDataObject>(jsonLoad);
+                // NEU: Deserialisiere in SaveGame.SaveDataObject
+                loadedData = JsonUtility.FromJson<SaveGame.SaveDataObject>(jsonLoad); 
                 Debug.Log("<color=orange>[LoadGame]</color> Spieldaten erfolgreich geladen.");
-                Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
+                if (loadedData == null) // Zusätzliche Prüfung, falls FromJson fehlschlägt und null zurückgibt
+                {
+                    Debug.LogError("<color=orange>[LoadGame]</color> JsonUtility.FromJson hat null zurückgegeben. Erstelle Standarddaten.");
+                    loadedData = new SaveGame.SaveDataObject(); // Fallback
+                }
+                else
+                {
+                    Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
+                }
             }
             else
             {
-                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveDataObject mit Standardwerten.");
-                loadedData = new SaveDataObject(); // Erstellt ein Objekt mit Standardwerten (IsInitialGameStart=true, HeartValue=1, LastScene="MainMenu")
+                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveGame.SaveDataObject mit Standardwerten.");
+                // NEU: Erstelle eine Instanz von SaveGame.SaveDataObject
+                loadedData = new SaveGame.SaveDataObject(); 
                 Debug.Log($"<color=orange>[LoadGame]</color> Standardwerte verwendet: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
         }
 
-        public bool IsInitialGameStart => loadedData.IsInitialGameStart;
-        public int HeartStorageValue => loadedData.HeartValue;
-        public int StarStorageValue => loadedData.StarValue;
-        public string LastScene => loadedData.LastScene;
+        public bool IsInitialGameStart => loadedData != null ? loadedData.IsInitialGameStart : true; // Null-Check hinzugefügt
+        public int HeartStorageValue => loadedData != null ? loadedData.HeartValue : 1; // Null-Check hinzugefügt
+        public int StarStorageValue => loadedData != null ? loadedData.StarValue : 0; // Null-Check hinzugefügt
+        public string LastScene => loadedData != null ? loadedData.LastScene : "Tutorial"; // Null-Check und sinnvoller Fallback
 
         private void UpdateGameData()
         {

@@ -19,6 +19,17 @@ namespace Collectables
                 {
                     Debug.LogError("Heart.cs: ResourceManager.Instance ist null!");
                 }
+                
+                // NEU: ObjectCounter informieren
+                if (GameManagement.ObjectCounter.Instance != null)
+                {
+                    GameManagement.ObjectCounter.Instance.ReportObjectCleared();
+                }
+                else
+                {
+                    Debug.LogWarning("[Heart.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
+                }
+
                 Destroy(gameObject);
             }
         }

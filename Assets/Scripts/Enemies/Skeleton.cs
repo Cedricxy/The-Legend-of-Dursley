@@ -251,7 +251,16 @@ namespace Enemies
         {
             Debug.Log("<color=orange>[Skeleton]</color> Skelett besiegt! Versuch, GameObject zu deaktivieren.", this); // Geändert
             // Hier könntest du noch eine Todesanimation, Soundeffekte oder Loot-Drops hinzufügen
-            // Destroy(gameObject); // Vorerst auskommentiert für Diagnose
+            
+            if (GameManagement.ObjectCounter.Instance != null)
+            {
+                GameManagement.ObjectCounter.Instance.ReportObjectCleared();
+            }
+            else
+            {
+                Debug.LogWarning("[Skeleton.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
+            }
+
             gameObject.SetActive(false); // Testweise deaktivieren
             Debug.Log($"<color=orange>[Skeleton]</color> GameObject {this.gameObject.name} Active-Status nach SetActive(false): {this.gameObject.activeSelf}", this);
             // TODO: Implementiere eine Todesanimation und verzögere das Zerstören des GameObjects

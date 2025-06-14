@@ -78,9 +78,9 @@ namespace SaveAndLoad
                     IsInitialGameStart = ResourceStorageManager.Instance.IsInitialGameStart,
                     HeartValue = ResourceStorageManager.Instance.HeartStorageValue,
                     StarValue = ResourceStorageManager.Instance.StarStorageValue,
-                    LastScene = SceneManager.GetActiveScene().name // Standardmäßig aktuelle Szene, wenn RSM verwendet wird
+                    LastScene = ResourceStorageManager.Instance.LastScene // GEÄNDERT: Nutze LastScene vom RSM
                 };
-                Debug.Log("<color=cyan>[SaveGame]</color> Speichere Daten von ResourceStorageManager.Instance.");
+                Debug.Log("<color=cyan>[SaveGame]</color> Speichere Daten von ResourceStorageManager.Instance. LastScene aus RSM: " + finalData.LastScene);
             }
             else
             {

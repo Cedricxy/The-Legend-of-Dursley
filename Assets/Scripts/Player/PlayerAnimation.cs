@@ -154,6 +154,8 @@ namespace Player
 {
     public class PlayerAnimation : MonoBehaviour
     {
+        public static event System.Action OnPlayerDied; // NEUES EVENT
+
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
 
@@ -237,31 +239,34 @@ namespace Player
                         if (_damageAnimationLock <= 0f) 
                         {
                             _isActuallyDead = true; 
-                            Debug.Log("Spieler ist gestorben. Bereite Reset für nächsten Spielstart vor und lade Endscreen.");
+                            Debug.Log("Spieler ist gestorben. Benachrichtige GameController.");
 
-                            if (ResourceStorageManager.Instance != null && SaveGame.Instance != null)
-                            {
-                                Debug.Log("<color=red>[PlayerAnimation]</color> Tod erkannt. Setze RSM für InitialGameStart.");
-                                ResourceStorageManager.Instance.IsInitialGameStart = true;
-                                ResourceStorageManager.Instance.HeartStorageValue = 0; // Wird von CheckInitialGameStart auf 1 gesetzt
-                                ResourceStorageManager.Instance.StarStorageValue = 0;  // Sterne auf 0 für kompletten Neustart
-                                ResourceStorageManager.Instance.LastScene = "Tutorial"; // Nächster Start ist Tutorial
-                                SaveGame.SaveGameData(); // Speichert diesen Zustand (isInitial=true, 0 Herzen, Tutorial)
-                            }
-                            else
-                            {
-                                Debug.LogError("<color=red>[PlayerAnimation]</color> ResourceStorageManager oder SaveGame Instanz nicht gefunden beim Tod! Reset kann nicht korrekt vorbereitet werden.");
-                            }
+                            OnPlayerDied?.Invoke(); // NEU: Event auslösen
 
-                            if (GameController.Instance != null)
-                            {
-                                GameController.Instance.LoadEndScreen();
-                            }
-                            else
-                            {
-                                Debug.LogError("GameController.Instance ist nicht gefunden worden, um Endscreen zu laden.");
-                            }
-                            Destroy(gameObject); 
+                            // Die folgende Logik wird zum GameController verschoben:
+                            // if (ResourceStorageManager.Instance != null && SaveGame.Instance != null)
+                            // {
+                            //     Debug.Log("<color=red>[PlayerAnimation]</color> Tod erkannt. Setze RSM für InitialGameStart.");
+                            //     ResourceStorageManager.Instance.IsInitialGameStart = true;
+                            //     ResourceStorageManager.Instance.HeartStorageValue = 0; // Wird von CheckInitialGameStart auf 1 gesetzt
+                            //     ResourceStorageManager.Instance.StarStorageValue = 0;  // Sterne auf 0 für kompletten Neustart
+                            //     ResourceStorageManager.Instance.LastScene = "Tutorial"; // Nächster Start ist Tutorial
+                            //     SaveGame.SaveGameData(); // Speichert diesen Zustand (isInitial=true, 0 Herzen, Tutorial)
+                            // }
+                            // else
+                            // {
+                            //     Debug.LogError("<color=red>[PlayerAnimation]</color> ResourceStorageManager oder SaveGame Instanz nicht gefunden beim Tod! Reset kann nicht korrekt vorbereitet werden.");
+                            // }
+
+                            // if (GameController.Instance != null)
+                            // {
+                            //     GameController.Instance.LoadEndScreen();
+                            // }
+                            // else
+                            // {
+                            //     Debug.LogError("GameController.Instance ist nicht gefunden worden, um Endscreen zu laden.");
+                            // }
+                            Destroy(gameObject); // Spielerobjekt zerstören
                             return; 
                         }
                     }
@@ -337,14 +342,15 @@ namespace Player
             foreach (Collider2D enemyCollider in hitEnemies)
             {
                 Debug.Log($"[PlayerAnimation.PerformAttack] Getroffener Collider: {enemyCollider.gameObject.name}, Tag: {enemyCollider.gameObject.tag}");
-                if (enemyCollider.gameObject.CompareTag("Enemy")) // Stelle sicher, dass der Gegner das Tag "Enemy" hat
+                // Beachte: Für den Baum wird hier ebenfalls das Tag "Enemy" erwartet.
+                // Alternativ könnte ein neues Tag "Destructible" eingeführt und hier abgefragt werden.
+                if (enemyCollider.gameObject.CompareTag("Enemy")) 
                 {
                     Slime slime = enemyCollider.GetComponent<Slime>();
                     if (slime != null)
                     {
                         slime.TakeDamage(attackDamage);
                         Debug.Log("Spieler hat Slime getroffen.");
-                        // Optional: Treffersound oder -effekt hier abspielen
                     }
 
                     Skeleton skeleton = enemyCollider.GetComponent<Skeleton>();
@@ -352,12 +358,18 @@ namespace Player
                     {
                         skeleton.TakeDamage(attackDamage);
                         Debug.Log("Spieler hat Skelett getroffen.");
-                        // Optional: Treffersound oder -effekt hier abspielen
+                    }
+
+                    DestroyableTree tree = enemyCollider.GetComponent<DestroyableTree>();
+                    if (tree != null)
+                    {
+                        tree.TakeDamage(attackDamage);
+                        Debug.Log("Spieler hat Baum getroffen.");
                     }
                 }
                 else
                 {
-                    Debug.Log($"[PlayerAnimation.PerformAttack] Getroffener Collider {enemyCollider.gameObject.name} hat NICHT das Tag 'Enemy'. Aktuelles Tag: '{enemyCollider.gameObject.tag}'");
+                    Debug.Log($"[PlayerAnimation.PerformAttack] Getroffener Collider {enemyCollider.gameObject.name} hat NICHT das Tag 'Enemy' (oder ein anderes erwartetes Tag). Aktuelles Tag: '{enemyCollider.gameObject.tag}'");
                 }
             }
         }

@@ -47,6 +47,7 @@ namespace ResourceSystem.Manager
             if (Instance == null)
             {
                 Instance = this;
+                transform.parent = null; // Sicherstellen, dass es ein Root-Objekt ist
                 DontDestroyOnLoad(gameObject);
             }
             else

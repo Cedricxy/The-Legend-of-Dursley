@@ -54,24 +54,38 @@ namespace GameManagement
             Time.timeScale = 1f;
             Debug.Log("<color=blue>[MainMenuManager]</color> OnNewGame aufgerufen.");
 
-            if (ResourceStorageManager.Instance != null && SaveGame.Instance != null)
-            {
-                Debug.Log("<color=blue>[MainMenuManager]</color> Setze Werte für neuen Spielstand im ResourceStorageManager.");
-                ResourceStorageManager.Instance.IsInitialGameStart = true; // Signal für RSM, Initialwerte zu setzen
-                ResourceStorageManager.Instance.HeartStorageValue = 1;    
-                ResourceStorageManager.Instance.StarStorageValue = 0;     
-                ResourceStorageManager.Instance.LastScene = "Tutorial"; 
+            // NEU: Signalisiere dem GameController/RSM, dass ein vollständiger Reset für ein neues Spiel erfolgen soll.
+            GameController.ForceNewGameReset = true;
+            Debug.Log("<color=blue>[MainMenuManager]</color> GameController.ForceNewGameReset auf true gesetzt.");
 
-                Debug.Log("<color=blue>[MainMenuManager]</color> Speichere den neuen initialen Spielstand.");
-                SaveGame.SaveGameData(); // Speichert diesen "frischen" Zustand sofort.
-                                         // RSM.CheckIsInitialGameStart wird in der Tutorial-Szene diesen Zustand dann finalisieren.
-            }
-            else
-            {
-                Debug.LogError("<color=blue>[MainMenuManager]</color> ResourceStorageManager oder SaveGame Instanz nicht gefunden! Neuer Spielstand kann nicht korrekt vorbereitet werden.");
-                // Wenn Instanzen fehlen, wird RSM in der Tutorial-Szene versuchen, aus einer (möglicherweise alten) Datei zu laden
-                // oder Standardwerte zu verwenden, was zu unerwartetem Verhalten führen kann.
-            }
+            // Die eigentliche Logik zum Setzen der Werte im RSM und Speichern
+            // wird jetzt idealerweise vom RSM selbst in OnSceneLoaded/CheckInitialGameStart gehandhabt,
+            // wenn ForceNewGameReset true ist.
+            // Wir laden hier nur noch die Tutorial-Szene.
+            // Die vorherige explizite Speicherung hier kann potenziell zu Konflikten führen,
+            // wenn der RSM die Werte beim Laden der Tutorial-Szene sofort wieder überschreibt.
+
+            // if (ResourceStorageManager.Instance != null && SaveGame.Instance != null)
+            // {
+            //     Debug.Log("<color=blue>[MainMenuManager]</color> Setze Werte für neuen Spielstand im ResourceStorageManager und erstelle SaveDataObject.");
+            //     ResourceStorageManager.Instance.IsInitialGameStart = true; 
+            //     ResourceStorageManager.Instance.HeartStorageValue = 1;    
+            //     ResourceStorageManager.Instance.StarStorageValue = 0;     
+            //     ResourceStorageManager.Instance.LastScene = "Tutorial"; 
+            //     SaveGame.SaveDataObject newGameData = new SaveGame.SaveDataObject
+            //     {
+            //         IsInitialGameStart = true, 
+            //         HeartValue = 1,
+            //         StarValue = 0,
+            //         LastScene = "Tutorial"
+            //     };
+            //     Debug.Log("<color=blue>[MainMenuManager]</color> Speichere den neuen initialen Spielstand explizit.");
+            //     SaveGame.SaveGameData(newGameData); 
+            // }
+            // else
+            // {
+            //     Debug.LogError("<color=blue>[MainMenuManager]</color> ResourceStorageManager oder SaveGame Instanz nicht gefunden! Neuer Spielstand kann nicht korrekt vorbereitet werden.");
+            // }
             
             if (mainMenuCanvas != null)
                 mainMenuCanvas.SetActive(false);
