@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using ResourceSystem.Storage; // Zugriff auf ResourceStorageManager
+using ResourceSystem.Storage;
 
 namespace Enemies
 {
     public class Slime : MonoBehaviour
     {
-        [SerializeField] private int damageAmount = 1; // Schaden, den der Slime verursacht
-        [SerializeField] private int maxHealth = 5;    // Maximale Lebenspunkte des Slimes
+        [SerializeField] private int damageAmount = 1; // Maximaler Schaden
+        [SerializeField] private int maxHealth = 5;    // Maximale Herzen
         private int _currentHealth;
 
         private void Awake()
@@ -16,11 +16,10 @@ namespace Enemies
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // Überprüfen, ob das kollidierende Objekt der Spieler ist
+            // Kollisionsprüfung mit dem Spieler.
             if (other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Slime hat Spieler berührt.");
-                // Greife auf den ResourceStorageManager zu, um dem Spieler Schaden zuzufügen
+                // Greift auf den ResourceStorageManager zu, um dem Spieler Schaden zuzufügen.
                 if (ResourceStorageManager.Instance != null)
                 {
                     ResourceStorageManager.Instance.HeartStorageValue -= damageAmount;
@@ -28,11 +27,6 @@ namespace Enemies
                     {
                         ResourceStorageManager.Instance.HeartStorageValue = 0;
                     }
-                    Debug.Log($"Spieler hat {damageAmount} Schaden erhalten. Aktuelle Herzen: {ResourceStorageManager.Instance.HeartStorageValue}");
-                }
-                else
-                {
-                    Debug.LogError("ResourceStorageManager.Instance ist nicht gefunden worden, um Schaden zu verursachen.");
                 }
             }
         }
@@ -40,7 +34,6 @@ namespace Enemies
         public void TakeDamage(int amount)
         {
             _currentHealth -= amount;
-            Debug.Log($"Slime hat {amount} Schaden erhalten. Aktuelle HP: {_currentHealth}/{maxHealth}");
             if (_currentHealth <= 0)
             {
                 Die();
@@ -49,15 +42,9 @@ namespace Enemies
 
         private void Die()
         {
-            Debug.Log("Slime besiegt!");
-            // Hier könntest du noch eine Todesanimation, Soundeffekte oder Loot-Drops hinzufügen
             if (GameManagement.ObjectCounter.Instance != null)
             {
                 GameManagement.ObjectCounter.Instance.ReportObjectCleared();
-            }
-            else
-            {
-                Debug.LogWarning("[Slime.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
             }
             Destroy(gameObject);
         }

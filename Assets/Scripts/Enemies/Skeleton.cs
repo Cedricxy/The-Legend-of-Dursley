@@ -1,31 +1,25 @@
 ﻿using UnityEngine;
-using ResourceSystem.Storage; // Für Zugriff auf ResourceStorageManager
+using ResourceSystem.Storage;
 
 namespace Enemies
 {
     public class Skeleton : MonoBehaviour
     {
-        [Header("Stats")]
         [SerializeField] private int damageAmount = 2;
         [SerializeField] private int maxHealth = 10;
         private int _currentHealth;
-
-        [Header("Patrol")]
         [SerializeField] private Transform pointA;
         [SerializeField] private Transform pointB;
         [SerializeField] private float speed = 2f;
-        [SerializeField] private float waitTimeAtPoints = 1f; // Optionale Wartezeit an den Punkten
+        [SerializeField] private float waitTimeAtPoints = 1f; // Optionale Wartezeit an den Punkten.
         private Transform _currentTarget;
         private bool _isWaiting = false;
         private float _waitTimer = 0f;
-        private SpriteRenderer _spriteRenderer; // Um die Blickrichtung anzupassen
-
+        private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rb;
         private Animator _animator;
-        private Vector2 _currentFacingDirection = Vector2.right; // Standardmäßig nach rechts schauen
+        private Vector2 _currentFacingDirection = Vector2.right;
         private string _lastPlayedAnimationName = "";
-
-        // private bool _lastFlipXState = false; // _spriteRenderer.flipX wird direkt verwendet
 
         private void Awake()
         {
@@ -33,33 +27,17 @@ namespace Enemies
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-
-            if (_spriteRenderer == null)
-            {
-                Debug.LogError("Skeleton benötigt eine SpriteRenderer Komponente für die Blickrichtung.", this);
-            }
-            if (_rb == null)
-            {
-                Debug.LogError("Skeleton benötigt eine Rigidbody2D Komponente.", this);
-            }
-            if (_animator == null)
-            {
-                Debug.LogError("Skeleton benötigt eine Animator Komponente.", this);
-            }
         }
 
         void Start()
         {
             if (pointA == null || pointB == null)
             {
-                Debug.LogError("Bitte weise Punkt A und Punkt B für die Patrouille des Skeletts im Inspektor zu.", this);
                 enabled = false; 
                 return;
             }
-            // Starte mit Punkt A als erstem Ziel
+            // Start bei Punkt A, dann Punkt B.
             _currentTarget = pointA;
-            // Optional: Skelett direkt an Punkt A positionieren, wenn es nicht schon dort ist.
-            // transform.position = new Vector2(pointA.position.x, transform.position.y); // Nur X-Position anpassen, Y beibehalten
             FlipSpriteToTarget(_currentTarget.position); 
         }
 
@@ -68,7 +46,7 @@ namespace Enemies
             if (pointA == null || pointB == null || _currentTarget == null) return;
 
             string animationPrefix;
-            Vector2 animationDirectionForLogic; // Richtung für die Logik (wohin es schaut/gehen will)
+            Vector2 animationDirectionForLogic;
 
             if (_isWaiting)
             {
@@ -104,20 +82,18 @@ namespace Enemies
             
             if (_rb.bodyType == RigidbodyType2D.Kinematic)
             {
-                transform.position = Vector2.MoveTowards(transform.position, 
-                                                         new Vector2(_currentTarget.position.x, transform.position.y), // Nur auf X-Achse bewegen
-                                                         speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(_currentTarget.position.x, transform.position.y), speed * Time.deltaTime);
             }
-            else // Dynamic Rigidbody
+            else
             {
                  _rb.linearVelocity = new Vector2(directionToTarget.x * speed, _rb.linearVelocity.y);
             }
 
-            // Überprüfe, ob das Ziel (nur X-Position) erreicht wurde
+            // Überprüft, ob das Ziel erreicht wurde.
             if (Mathf.Abs(transform.position.x - _currentTarget.position.x) < 0.1f)
             {
-                transform.position = new Vector2(_currentTarget.position.x, transform.position.y); // Exakt positionieren
-                if (_rb.bodyType == RigidbodyType2D.Dynamic) _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y); // Stoppe X-Bewegung
+                transform.position = new Vector2(_currentTarget.position.x, transform.position.y);
+                if (_rb.bodyType == RigidbodyType2D.Dynamic) _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
                 _isWaiting = true; 
             }
         }
@@ -142,11 +118,11 @@ namespace Enemies
             {
                 if (targetPosition.x < transform.position.x)
                 {
-                    _spriteRenderer.flipX = true; // Schaut nach links
+                    _spriteRenderer.flipX = true;
                 }
                 else if (targetPosition.x > transform.position.x)
                 {
-                    _spriteRenderer.flipX = false; // Schaut nach rechts
+                    _spriteRenderer.flipX = false;
                 }
             }
         }
@@ -155,7 +131,6 @@ namespace Enemies
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Skelett hat Spieler berührt.");
                 if (ResourceStorageManager.Instance != null)
                 {
                     ResourceStorageManager.Instance.HeartStorageValue -= damageAmount;
@@ -163,11 +138,6 @@ namespace Enemies
                     {
                         ResourceStorageManager.Instance.HeartStorageValue = 0;
                     }
-                    Debug.Log($"Spieler hat {damageAmount} Schaden erhalten. Aktuelle Herzen: {ResourceStorageManager.Instance.HeartStorageValue}");
-                }
-                else
-                {
-                    Debug.LogError("ResourceStorageManager.Instance ist nicht gefunden worden, um Schaden zu verursachen.", this);
                 }
             }
         }
@@ -175,7 +145,6 @@ namespace Enemies
         public void TakeDamage(int amount)
         {
             _currentHealth -= amount;
-            Debug.Log($"<color=orange>[Skeleton]</color> Skelett hat {amount} Schaden erhalten. Aktuelle HP: {_currentHealth}/{maxHealth}", this); // Geändert
             if (_currentHealth <= 0)
             {
                 Die();
@@ -186,15 +155,12 @@ namespace Enemies
         {
             if (_animator == null || _spriteRenderer == null)
             {
-                Debug.LogError("[Skeleton] Animator oder SpriteRenderer ist null.", this);
                 return;
             }
 
             string targetAnimationName = "";
-            bool targetFlipX = _spriteRenderer.flipX; // Standardmäßig aktuellen Flip beibehalten
+            bool targetFlipX = _spriteRenderer.flipX;
 
-            // Basierend auf dem Präfix die Zielanimation bestimmen.
-            // Für ein rein horizontal bewegtes Skelett sind "Right"-Animationen mit Spiegelung üblich.
             if (prefix == "Walk")
             {
                 targetAnimationName = "WalkRight"; 
@@ -207,65 +173,35 @@ namespace Enemies
             }
             else
             {
-                Debug.LogWarning($"[Skeleton] Unbekannter Animationspräfix: {prefix}. Standard zu StandRight.", this);
                 targetAnimationName = "StandRight";
                 targetFlipX = _currentFacingDirection.x < 0;
             }
             
-            // Sicherstellen, dass targetAnimationName nicht leer ist (sollte durch obige Logik nicht passieren)
             if (string.IsNullOrEmpty(targetAnimationName))
             {
-                Debug.LogError($"[Skeleton] targetAnimationName wurde für Präfix '{prefix}' leer. Standard zu StandRight.", this);
                 targetAnimationName = "StandRight"; 
                 targetFlipX = _currentFacingDirection.x < 0;
             }
-
-            // Debug-Ausgabe vor dem Abspielen
-            // Debug.Log($"[Skeleton] Versuch: Pref:{prefix}, Dir:{direction}, TargetAnim:{targetAnimationName}, TargetFlip:{targetFlipX}. LastAnim:{_lastPlayedAnimationName}, CurrentFlip:{_spriteRenderer.flipX}", this);
-
-            // Nur Animation aktualisieren, wenn sie sich geändert hat oder der Flip-Status anders ist
+            
             if (targetAnimationName != _lastPlayedAnimationName || targetFlipX != _spriteRenderer.flipX)
             {
-                // Überprüfen, ob der State existiert, bevor er abgespielt wird
                 if (_animator.HasState(0, Animator.StringToHash(targetAnimationName)))
                 {
-                    Debug.Log($"[Skeleton] Spiele Animation: {targetAnimationName}, Setze FlipX auf: {targetFlipX}", this);
-                    _animator.Play(targetAnimationName, 0, 0f); // Spiele Animation von vorne ab
+                    _animator.Play(targetAnimationName, 0, 0f); // Spielt Animation von vorne ab.
                     _spriteRenderer.flipX = targetFlipX;
                     _lastPlayedAnimationName = targetAnimationName;
                 }
-                else
-                {
-                    Debug.LogError($"[Skeleton] Animations-State '{targetAnimationName}' existiert nicht im Animator Controller auf Layer 0. Aktuell spielt möglicherweise '{_lastPlayedAnimationName}' oder Default.", this);
-                    // Wenn der gewünschte State nicht existiert, könnte hier ein Fallback zu einer bekannten Default-Animation (z.B. "StandFront", falls vorhanden) sinnvoll sein.
-                    // Vorerst wird nur ein Fehler geloggt und die vorherige Animation/Flip beibehalten oder der Animator-Default greift.
-                }
             }
-            // else
-            // {
-            //     Debug.Log($"[Skeleton] Animation {targetAnimationName} (FlipX: {targetFlipX}) ist bereits aktiv oder Flip-Status ist identisch.", this);
-            // }
         }
 
         private void Die()
         {
-            Debug.Log("<color=orange>[Skeleton]</color> Skelett besiegt! Versuch, GameObject zu deaktivieren.", this); // Geändert
-            // Hier könntest du noch eine Todesanimation, Soundeffekte oder Loot-Drops hinzufügen
-            
             if (GameManagement.ObjectCounter.Instance != null)
             {
                 GameManagement.ObjectCounter.Instance.ReportObjectCleared();
             }
-            else
-            {
-                Debug.LogWarning("[Skeleton.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
-            }
 
-            gameObject.SetActive(false); // Testweise deaktivieren
-            Debug.Log($"<color=orange>[Skeleton]</color> GameObject {this.gameObject.name} Active-Status nach SetActive(false): {this.gameObject.activeSelf}", this);
-            // TODO: Implementiere eine Todesanimation und verzögere das Zerstören des GameObjects
-            // Zum Beispiel:
-            // StartCoroutine(DeathSequence()); 
+            gameObject.SetActive(false);
         }
     }
 }

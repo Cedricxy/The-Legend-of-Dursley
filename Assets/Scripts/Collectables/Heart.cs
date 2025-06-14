@@ -9,27 +9,15 @@ namespace Collectables
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Heart.cs: OnTriggerEnter2D mit Player ausgelöst.");
                 if (ResourceManager.Instance != null)
                 {
-                    Debug.Log($"Heart.cs: ResourceManager.Instance ID: {ResourceManager.Instance.GetInstanceID()}. Rufe AddHeart() auf.");
                     ResourceManager.Instance.AddHeart();
                 }
-                else
-                {
-                    Debug.LogError("Heart.cs: ResourceManager.Instance ist null!");
-                }
                 
-                // NEU: ObjectCounter informieren
                 if (GameManagement.ObjectCounter.Instance != null)
                 {
                     GameManagement.ObjectCounter.Instance.ReportObjectCleared();
                 }
-                else
-                {
-                    Debug.LogWarning("[Heart.cs] ObjectCounter.Instance ist null. Ziel konnte nicht gemeldet werden.");
-                }
-
                 Destroy(gameObject);
             }
         }
