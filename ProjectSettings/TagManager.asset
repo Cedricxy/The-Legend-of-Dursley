@@ -11,6 +11,7 @@ TagManager:
   - UI
   - Collectables
   - Manager
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Tilemap
   - Collectables
   - Manager
-  - 
+  - Enemies
   - 
   - 
   - 
@@ -50,6 +51,9 @@ TagManager:
     locked: 0
   - name: Water
     uniqueID: 1916535493
+    locked: 0
+  - name: Enemies
+    uniqueID: 3584615261
     locked: 0
   - name: Objects
     uniqueID: 2228277053

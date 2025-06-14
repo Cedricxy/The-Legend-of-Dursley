@@ -8,11 +8,7 @@ namespace SaveAndLoad
 {
     public class SaveGame : MonoBehaviour
     {
-        // Gibt an, ob das Spiel automatisch gespeichert werden soll.
         [SerializeField] private bool autosave;
-
-        // Boolean, der festlegt, ob ein neues Spiel startet und ggf. vorhandene Werte überschrieben werden.
-        [SerializeField] private bool isSetToInitialGameStart;
 
         // Singleton der SaveGame-Klasse
         public static SaveGame Instance { get; private set; }
@@ -44,7 +40,7 @@ namespace SaveAndLoad
         private void AutoSave()
         {
             // Speichert die Spieldaten automatisch.
-            SaveGameData();
+            SaveGameData(); // Ruft ohne Parameter auf, versucht RSM zu verwenden
         }
 
         private void Update()
@@ -52,69 +48,12 @@ namespace SaveAndLoad
             // Speichert die Spieldaten, wenn die Taste F5 gedrückt wird.
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                SaveGameData();
+                SaveGameData(); // Ruft ohne Parameter auf, versucht RSM zu verwenden
             }
-        }
-
-        // Zugriff auf den initialen Spielstartzustand.
-        public static bool IsSetToInitialGameStart
-        {
-            get => Instance.isSetToInitialGameStart;
-            set => Instance.isSetToInitialGameStart = value;
-        }
-
-        // Überprüft, ob das Spiel im Startzustand ist.
-        private static bool CheckIsInitialGameStart()
-        {
-            bool isInitialGameStart = true;
-
-            if (ResourceStorageManager.Instance != null)
-            {
-                isInitialGameStart = ResourceStorageManager.Instance.IsInitialGameStart;
-            }
-
-            if (IsSetToInitialGameStart)
-            {
-                isInitialGameStart = true;
-            }
-
-            return isInitialGameStart;
-        }
-
-        // Die zuletzt gespeicherte Szene.
-        private static string CheckLastScene()
-        {
-            return SceneManager.GetActiveScene().name;
-        }
-        
-        // Überprüft den Wert der Herzen.
-        private static int CheckHeartStorageValue()
-        {
-            int heartStorageValue = 0;
-
-            if (ResourceStorageManager.Instance != null)
-            {
-                heartStorageValue = 	ResourceStorageManager.Instance.HeartStorageValue;
-            }
-
-            return heartStorageValue;
-        }
-
-        // Überprüft den Wert der Sterne.
-        private static int CheckStarStorageValue()
-        {
-            int starStorageValue = 0;
-
-            if (ResourceStorageManager.Instance != null)
-            {
-                starStorageValue = 	ResourceStorageManager.Instance.StarStorageValue;
-            }
-
-            return starStorageValue;
         }
 
         // Klasse, die die zu speichernden Spieldaten repräsentiert.
-        private class SaveDataObject
+        public class SaveDataObject
         {
             public bool IsInitialGameStart = true; // Spielstartzustand
             public string LastScene = "MainMenu"; // Standard-Szene
@@ -123,18 +62,37 @@ namespace SaveAndLoad
         }
 
         // Speichert die Spieldaten in einer JSON-Datei.
-        public static void SaveGameData()
+        public static void SaveGameData(SaveDataObject dataToSave = null)
         {
-            SaveDataObject saveDataObject = new SaveDataObject()
-            {
-                IsInitialGameStart = CheckIsInitialGameStart(),
-                LastScene = CheckLastScene(),
-                HeartValue = CheckHeartStorageValue(),
-                StarValue = CheckStarStorageValue()
-            };
+            SaveDataObject finalData;
 
-            string jsonSave = JsonUtility.ToJson(saveDataObject); // Konvertiert die Daten in das JSON-Format.
-            File.WriteAllText(Application.persistentDataPath + "/SaveGameData.json", jsonSave); // Speichert die JSON-Datei.
+            if (dataToSave != null)
+            {
+                finalData = dataToSave;
+                Debug.Log("<color=cyan>[SaveGame]</color> Speichere explizit übergebenes SaveDataObject.");
+            }
+            else if (ResourceStorageManager.Instance != null)
+            {
+                finalData = new SaveDataObject()
+                {
+                    IsInitialGameStart = ResourceStorageManager.Instance.IsInitialGameStart,
+                    HeartValue = ResourceStorageManager.Instance.HeartStorageValue,
+                    StarValue = ResourceStorageManager.Instance.StarStorageValue,
+                    LastScene = SceneManager.GetActiveScene().name // Standardmäßig aktuelle Szene, wenn RSM verwendet wird
+                };
+                Debug.Log("<color=cyan>[SaveGame]</color> Speichere Daten von ResourceStorageManager.Instance.");
+            }
+            else
+            {
+                Debug.LogError("<color=cyan>[SaveGame]</color> Weder SaveDataObject übergeben noch ResourceStorageManager.Instance verfügbar. Spiel kann nicht gespeichert werden.");
+                return;
+            }
+            
+            string jsonSave = JsonUtility.ToJson(finalData, true);
+            File.WriteAllText(Application.persistentDataPath + "/SaveGameData.json", jsonSave);
+            
+            Debug.Log($"<color=cyan>[SaveGame]</color> Spiel gespeichert! Pfad: {Application.persistentDataPath}/SaveGameData.json");
+            Debug.Log($"<color=cyan>[SaveGame]</color> Gespeicherte Werte: IsInitialGameStart={finalData.IsInitialGameStart}, LastScene='{finalData.LastScene}', Hearts={finalData.HeartValue}, Stars={finalData.StarValue}");
         }
     }
 }

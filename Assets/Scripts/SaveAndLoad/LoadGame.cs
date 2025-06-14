@@ -52,15 +52,19 @@ namespace SaveAndLoad
         public void LoadGameData()
         {
             string filePath = Application.persistentDataPath + "/SaveGameData.json";
+            Debug.Log($"<color=orange>[LoadGame]</color> Versuch, Spieldaten zu laden von: {filePath}");
             if (File.Exists(filePath))
             {
                 string jsonLoad = File.ReadAllText(filePath);
                 loadedData = JsonUtility.FromJson<SaveDataObject>(jsonLoad);
-                Debug.Log("loadedData: " + loadedData);
+                Debug.Log("<color=orange>[LoadGame]</color> Spieldaten erfolgreich geladen.");
+                Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
             else
             {
-                loadedData = new SaveDataObject();
+                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveDataObject mit Standardwerten.");
+                loadedData = new SaveDataObject(); // Erstellt ein Objekt mit Standardwerten (IsInitialGameStart=true, HeartValue=1, LastScene="MainMenu")
+                Debug.Log($"<color=orange>[LoadGame]</color> Standardwerte verwendet: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
         }
 
@@ -135,15 +139,19 @@ namespace SaveAndLoad
         public void LoadGameData()
         {
             string filePath = Application.persistentDataPath + "/SaveGameData.json";
+            Debug.Log($"<color=orange>[LoadGame]</color> Versuch, Spieldaten zu laden von: {filePath}");
             if (File.Exists(filePath))
             {
                 string jsonLoad = File.ReadAllText(filePath);
                 loadedData = JsonUtility.FromJson<SaveDataObject>(jsonLoad);
-                Debug.Log("loadedData: " + loadedData);
+                Debug.Log("<color=orange>[LoadGame]</color> Spieldaten erfolgreich geladen.");
+                Debug.Log($"<color=orange>[LoadGame]</color> Geladene Werte: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
             else
             {
-                loadedData = new SaveDataObject();
+                Debug.LogWarning("<color=orange>[LoadGame]</color> Keine Speicherdatei gefunden. Erstelle neues SaveDataObject mit Standardwerten.");
+                loadedData = new SaveDataObject(); // Erstellt ein Objekt mit Standardwerten (IsInitialGameStart=true, HeartValue=1, LastScene="MainMenu")
+                Debug.Log($"<color=orange>[LoadGame]</color> Standardwerte verwendet: IsInitialGameStart={loadedData.IsInitialGameStart}, LastScene='{loadedData.LastScene}', Hearts={loadedData.HeartValue}, Stars={loadedData.StarValue}");
             }
         }
 
