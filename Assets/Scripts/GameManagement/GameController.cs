@@ -18,7 +18,8 @@ namespace GameManagement
                 transform.parent = null; // Sicherstellen, dass es ein Root-Objekt ist
                 DontDestroyOnLoad(gameObject); // Behält den GameController über Szenenwechsel hinweg
                 ObjectCounter.OnSceneObjectivesCompleted += HandleSceneObjectivesCompleted; // Event abonnieren
-                Debug.Log("[GameController] Instance created and subscribed to OnSceneObjectivesCompleted.");
+                Player.PlayerAnimation.OnPlayerDied += HandlePlayerDied; // NEU: Event für Spielertod abonnieren
+                Debug.Log("[GameController] Instance created and subscribed to OnSceneObjectivesCompleted and OnPlayerDied.");
             }
             else
             {
@@ -32,7 +33,8 @@ namespace GameManagement
             if (Instance == this)
             {
                 ObjectCounter.OnSceneObjectivesCompleted -= HandleSceneObjectivesCompleted; // Event deabonnieren
-                Debug.Log("[GameController] Instance destroyed and unsubscribed from OnSceneObjectivesCompleted.");
+                Player.PlayerAnimation.OnPlayerDied -= HandlePlayerDied; // NEU: Event für Spielertod deabonnieren
+                Debug.Log("[GameController] Instance destroyed and unsubscribed from OnSceneObjectivesCompleted and OnPlayerDied.");
             }
         }
 
@@ -86,6 +88,38 @@ namespace GameManagement
             {
                 Debug.LogWarning($"[GameController] Ziele in Szene '{currentSceneName}' erreicht, aber keine Logik für Szenenwechsel definiert.");
             }
+        }
+
+        // NEUE METHODE ZUR BEHANDLUNG DES SPIELERTODES
+        private void HandlePlayerDied()
+        {
+            Debug.Log("<color=red>[GameController]</color> Event OnPlayerDied empfangen.");
+
+            if (ResourceStorageManager.Instance != null && SaveGame.Instance != null)
+            {
+                Debug.Log("<color=red>[GameController]</color> Tod erkannt. Setze RSM für InitialGameStart.");
+                ResourceStorageManager.Instance.IsInitialGameStart = true;
+                ResourceStorageManager.Instance.HeartStorageValue = 0; // Wird von CheckInitialGameStart auf 1 gesetzt
+                ResourceStorageManager.Instance.StarStorageValue = 0;  // Sterne auf 0 für kompletten Neustart
+                ResourceStorageManager.Instance.LastScene = "Tutorial"; // Nächster Start ist Tutorial
+                
+                // Speichere diesen Zustand explizit
+                SaveGame.SaveDataObject deathSaveData = new SaveGame.SaveDataObject
+                {
+                    IsInitialGameStart = ResourceStorageManager.Instance.IsInitialGameStart,
+                    HeartValue = ResourceStorageManager.Instance.HeartStorageValue,
+                    StarValue = ResourceStorageManager.Instance.StarStorageValue,
+                    LastScene = ResourceStorageManager.Instance.LastScene
+                };
+                SaveGame.SaveGameData(deathSaveData); 
+                Debug.Log("<color=red>[GameController]</color> Spielzustand für Tod gespeichert.");
+            }
+            else
+            {
+                Debug.LogError("<color=red>[GameController]</color> ResourceStorageManager oder SaveGame Instanz nicht gefunden beim Tod! Reset kann nicht korrekt vorbereitet werden.");
+            }
+            
+            LoadEndScreen();
         }
 
         public void LoadNextLevel() // Diese Methode wird jetzt nicht mehr direkt von HandleSceneObjectivesCompleted benötigt
